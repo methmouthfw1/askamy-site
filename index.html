@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask Amy — She answers the calls you can't.</title>
+<meta name="description" content="Amy is an AI receptionist for home service companies. She answers every call, books the job, and texts you the lead. Call her right now and hear it yourself.">
+<meta property="og:title" content="Ask Amy — She answers the calls you can't.">
+<meta property="og:description" content="Every missed call is a job someone else booked. Amy answers on the first ring, 24/7. Call her and hear it yourself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,600;0,800;0,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --soot:#0E0D0C;
+  --char:#1A1715;
+  --ash:#2A2622;
+  --ember:#FF6B2C;
+  --flame:#FFB25E;
+  --bone:#F2EDE7;
+  --smoke:#A39A91;
+  --alarm:#E4483D;
+  --go:#3FBF7F;
+  --disp:'Archivo',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--soot);color:var(--bone);
+  font-family:var(--body);line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* ---------- NAV ---------- */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(14,13,12,.88);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--ash);
+}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:baseline;gap:10px}
+.logo-mark{
+  font-family:var(--disp);font-weight:900;font-size:19px;
+  letter-spacing:-.02em;color:var(--bone);
+}
+.logo-mark em{color:var(--ember);font-style:normal}
+.logo-sub{
+  font-family:var(--mono);font-size:10px;color:var(--smoke);
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.nav-cta{
+  font-family:var(--mono);font-weight:700;font-size:13px;
+  background:var(--ember);color:#140A05;
+  padding:10px 18px;border-radius:4px;text-decoration:none;
+  white-space:nowrap;transition:background .15s;
+}
+.nav-cta:hover{background:var(--flame)}
+@media(max-width:560px){.logo-sub{display:none}}
+
+/* ---------- HERO ---------- */
+.hero{padding:88px 0 72px;position:relative}
+.hero::before{
+  content:'';position:absolute;top:-10%;left:50%;transform:translateX(-50%);
+  width:820px;height:420px;pointer-events:none;
+  background:radial-gradient(ellipse,rgba(255,107,44,.13),transparent 68%);
+}
+.hero-in{position:relative}
+.eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ember);margin-bottom:22px;
+}
+h1{
+  font-family:var(--disp);font-weight:900;
+  font-size:clamp(38px,7vw,74px);line-height:.98;
+  letter-spacing:-.035em;margin-bottom:22px;max-width:16ch;
+}
+h1 em{font-style:normal;color:var(--ember)}
+.hero-sub{
+  font-size:clamp(16px,2.1vw,20px);color:var(--smoke);
+  max-width:50ch;margin-bottom:36px;
+}
+.hero-sub strong{color:var(--bone);font-weight:600}
+
+/* the phone number — the whole point of the domain */
+.callbox{
+  display:inline-flex;flex-direction:column;gap:6px;
+  background:var(--char);border:1px solid var(--ash);
+  border-left:3px solid var(--ember);
+  padding:20px 26px;border-radius:6px;margin-bottom:14px;
+  text-decoration:none;transition:border-color .15s,transform .15s;
+}
+.callbox:hover{border-color:var(--ember);transform:translateY(-2px)}
+.callbox-label{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--smoke);
+}
+.callbox-num{
+  font-family:var(--disp);font-weight:800;
+  font-size:clamp(28px,5vw,40px);letter-spacing:-.02em;
+  color:var(--bone);line-height:1.1;
+}
+.callbox:hover .callbox-num{color:var(--flame)}
+.callnote{font-size:14px;color:var(--smoke);margin-bottom:0}
+.callnote b{color:var(--flame);font-weight:600}
+
+/* ---------- SIGNATURE: the call strip ---------- */
+.strip-wrap{margin-top:56px}
+.strip-head{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:12px;gap:16px;flex-wrap:wrap;
+}
+.strip-title{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--smoke);
+}
+.strip-toggle{display:flex;gap:0;border:1px solid var(--ash);border-radius:4px;overflow:hidden}
+.strip-toggle button{
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  background:transparent;color:var(--smoke);border:0;
+  padding:8px 14px;cursor:pointer;transition:all .15s;
+}
+.strip-toggle button.on{background:var(--ember);color:#140A05}
+.strip{
+  background:var(--char);border:1px solid var(--ash);border-radius:8px;
+  overflow:hidden;
+}
+.strip-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 18px;border-bottom:1px solid var(--ash);
+  font-family:var(--mono);font-size:11px;color:var(--smoke);
+  letter-spacing:.06em;
+}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ash)}
+.dot.live{background:var(--go);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.strip-body{padding:22px 18px;min-height:230px}
+.evt{
+  display:flex;align-items:center;gap:14px;
+  padding:11px 0;border-bottom:1px solid rgba(42,38,34,.6);
+  font-family:var(--mono);font-size:13px;
+  opacity:0;transform:translateY(6px);
+}
+.evt:last-child{border-bottom:0}
+.evt.show{opacity:1;transform:none;transition:opacity .3s,transform .3s}
+.evt-time{color:var(--smoke);font-size:11px;flex-shrink:0;width:62px}
+.evt-txt{flex:1;color:var(--bone)}
+.evt-tag{
+  font-size:10px;font-weight:700;letter-spacing:.08em;
+  padding:3px 8px;border-radius:3px;flex-shrink:0;
+}
+.tag-ring{background:rgba(163,154,145,.15);color:var(--smoke)}
+.tag-miss{background:rgba(228,72,61,.15);color:var(--alarm)}
+.tag-ans{background:rgba(255,107,44,.15);color:var(--ember)}
+.tag-book{background:rgba(63,191,127,.15);color:var(--go)}
+.strip-foot{
+  padding:16px 18px;border-top:1px solid var(--ash);
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  font-family:var(--mono);font-size:12px;flex-wrap:wrap;
+}
+.strip-foot .lbl{color:var(--smoke);letter-spacing:.06em;text-transform:uppercase;font-size:10px}
+.strip-foot .val{font-family:var(--disp);font-weight:800;font-size:22px}
+.val.bad{color:var(--alarm)}
+.val.good{color:var(--go)}
+@media(max-width:560px){
+  .evt{gap:9px;font-size:12px}
+  .evt-time{width:auto;font-size:10px}
+  .evt-tag{font-size:9px;padding:2px 6px}
+}
+
+/* ---------- SECTIONS ---------- */
+section{padding:80px 0;border-top:1px solid var(--ash)}
+.sec-eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ember);margin-bottom:16px;
+}
+h2{
+  font-family:var(--disp);font-weight:800;
+  font-size:clamp(28px,4.4vw,44px);line-height:1.06;
+  letter-spacing:-.03em;margin-bottom:18px;max-width:20ch;
+}
+.lede{font-size:17px;color:var(--smoke);max-width:56ch;margin-bottom:44px}
+
+/* ---------- ROI ---------- */
+.roi{
+  display:grid;grid-template-columns:1fr 1fr;gap:28px;
+  background:var(--char);border:1px solid var(--ash);
+  border-radius:10px;padding:32px;
+}
+.field{margin-bottom:22px}
+.field label{
+  display:block;font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--smoke);margin-bottom:9px;
+}
+.field input[type=number]{
+  width:100%;background:var(--soot);border:1px solid var(--ash);
+  color:var(--bone);font-family:var(--disp);font-weight:700;font-size:22px;
+  padding:12px 14px;border-radius:5px;
+}
+.field input[type=number]:focus{outline:2px solid var(--ember);outline-offset:1px;border-color:transparent}
+.field input[type=range]{width:100%;accent-color:var(--ember);height:26px}
+.rate-val{font-family:var(--disp);font-weight:800;font-size:22px;color:var(--flame)}
+.roi-out{
+  background:var(--soot);border:1px solid var(--ash);border-radius:8px;
+  padding:26px;display:flex;flex-direction:column;justify-content:center;
+}
+.roi-out .lbl{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--smoke);margin-bottom:6px;
+}
+.roi-big{
+  font-family:var(--disp);font-weight:900;
+  font-size:clamp(36px,6vw,54px);letter-spacing:-.03em;
+  color:var(--ember);line-height:1;margin-bottom:4px;
+}
+.roi-note{font-size:14px;color:var(--smoke);margin-top:18px;padding-top:18px;border-top:1px solid var(--ash)}
+.roi-note b{color:var(--bone)}
+@media(max-width:760px){.roi{grid-template-columns:1fr;padding:24px}}
+
+/* ---------- MODES ---------- */
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.mode{
+  background:var(--char);border:1px solid var(--ash);
+  border-radius:10px;padding:30px;position:relative;overflow:hidden;
+}
+.mode::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--ember),var(--flame));
+}
+.mode-kicker{
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--flame);margin-bottom:12px;
+}
+.mode h3{
+  font-family:var(--disp);font-weight:800;font-size:25px;
+  letter-spacing:-.02em;margin-bottom:12px;
+}
+.mode p{color:var(--smoke);font-size:15px;margin-bottom:20px}
+.mode ul{list-style:none}
+.mode li{
+  padding:9px 0 9px 22px;position:relative;
+  font-size:15px;border-top:1px solid rgba(42,38,34,.7);
+}
+.mode li::before{
+  content:'';position:absolute;left:0;top:17px;
+  width:7px;height:7px;background:var(--ember);border-radius:1px;
+}
+@media(max-width:760px){.modes{grid-template-columns:1fr}}
+
+/* ---------- STEPS (a real sequence — numbering earns its place) ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{border-top:2px solid var(--ember);padding-top:20px}
+.step-n{
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  color:var(--ember);letter-spacing:.1em;margin-bottom:12px;
+}
+.step h3{font-family:var(--disp);font-weight:700;font-size:19px;margin-bottom:9px}
+.step p{color:var(--smoke);font-size:15px}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+
+/* ---------- PRICING ---------- */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:12px}
+.plan{
+  background:var(--char);border:1px solid var(--ash);
+  border-radius:10px;padding:28px;display:flex;flex-direction:column;
+}
+.plan.best{border-color:var(--ember);position:relative}
+.plan.best::before{
+  content:'MOST PICKED';position:absolute;top:-1px;right:16px;
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;
+  background:var(--ember);color:#140A05;padding:4px 9px;border-radius:0 0 3px 3px;
+}
+.plan-name{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--flame);margin-bottom:14px;
+}
+.plan-price{
+  font-family:var(--disp);font-weight:900;font-size:38px;
+  letter-spacing:-.03em;line-height:1;
+}
+.plan-per{font-family:var(--mono);font-size:12px;color:var(--smoke);margin:6px 0 4px}
+.plan-setup{font-family:var(--mono);font-size:11px;color:var(--smoke);padding-bottom:18px;border-bottom:1px solid var(--ash);margin-bottom:18px}
+.plan ul{list-style:none;flex:1;margin-bottom:22px}
+.plan li{font-size:14px;padding:7px 0 7px 20px;position:relative;color:var(--smoke)}
+.plan li::before{content:'→';position:absolute;left:0;color:var(--ember);font-weight:700}
+.plan-btn{
+  display:block;text-align:center;text-decoration:none;
+  font-family:var(--mono);font-weight:700;font-size:13px;
+  padding:13px;border-radius:5px;
+  border:1px solid var(--ash);color:var(--bone);transition:all .15s;
+}
+.plan-btn:hover{border-color:var(--ember);color:var(--ember)}
+.plan.best .plan-btn{background:var(--ember);color:#140A05;border-color:var(--ember)}
+.plan.best .plan-btn:hover{background:var(--flame);border-color:var(--flame)}
+.price-switch{display:flex;gap:0;border:1px solid var(--ash);border-radius:5px;overflow:hidden;margin-bottom:32px;width:fit-content;max-width:100%}
+.price-switch button{
+  font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.05em;
+  background:transparent;color:var(--smoke);border:0;padding:11px 18px;cursor:pointer;transition:all .15s;
+}
+.price-switch button.on{background:var(--ember);color:#140A05}
+@media(max-width:860px){.price-grid{grid-template-columns:1fr}}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:760px}
+details{border-bottom:1px solid var(--ash)}
+summary{
+  font-family:var(--disp);font-weight:600;font-size:17px;
+  padding:20px 30px 20px 0;cursor:pointer;list-style:none;position:relative;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:'+';position:absolute;right:4px;top:18px;
+  color:var(--ember);font-size:22px;font-weight:400;
+}
+details[open] summary::after{content:'–'}
+details p{color:var(--smoke);padding:0 0 20px;font-size:15px;max-width:64ch}
+
+/* ---------- FINAL CTA ---------- */
+.final{
+  border-top:1px solid var(--ash);
+  background:linear-gradient(180deg,var(--char),var(--soot));
+  padding:88px 0;text-align:center;
+}
+.final h2{margin:0 auto 16px;max-width:18ch}
+.final p{color:var(--smoke);max-width:44ch;margin:0 auto 32px;font-size:17px}
+.final .callbox{margin:0 auto;text-align:left}
+footer{
+  border-top:1px solid var(--ash);padding:32px 0;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:11px;color:var(--smoke);letter-spacing:.05em;
+}
+footer a{color:var(--smoke);text-decoration:none}
+footer a:hover{color:var(--ember)}
+
+/* accessibility floor */
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
+  outline:2px solid var(--flame);outline-offset:2px;
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .evt{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <div class="logo">
+      <span class="logo-mark">ASK <em>AMY</em></span>
+      <span class="logo-sub">by ChimTech</span>
+    </div>
+    <a class="nav-cta" id="navCall" href="#">Call Amy</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-in">
+    <div class="eyebrow">AI receptionist for home service companies</div>
+    <h1>She answers the calls <em>you can't.</em></h1>
+    <p class="hero-sub">You're on a roof. You're under a truck. You're asleep. Amy picks up on the first ring, books the job, and <strong>texts you the lead before you're back in the van.</strong></p>
+
+    <a class="callbox" id="heroCall" href="#">
+      <span class="callbox-label">Don't take our word for it — call her</span>
+      <span class="callbox-num" id="heroNum">(000) 000-0000</span>
+    </a>
+    <p class="callnote">She'll answer in <b>one ring.</b> Ask her anything. Try to trip her up.</p>
+
+    <!-- SIGNATURE -->
+    <div class="strip-wrap">
+      <div class="strip-head">
+        <div class="strip-title">Friday, 7:42 PM — same call, two outcomes</div>
+        <div class="strip-toggle" role="group" aria-label="Compare outcomes">
+          <button id="btnNo" class="on">Without Amy</button>
+          <button id="btnYes">With Amy</button>
+        </div>
+      </div>
+      <div class="strip">
+        <div class="strip-bar">
+          <span class="dot live"></span>
+          <span id="stripLine">INCOMING — (203) 555-0148 — NEW CALLER</span>
+        </div>
+        <div class="strip-body" id="stripBody"></div>
+        <div class="strip-foot">
+          <div>
+            <div class="lbl" id="footLbl">Outcome</div>
+            <div class="val bad" id="footVal">—</div>
+          </div>
+          <div style="text-align:right">
+            <div class="lbl">Revenue</div>
+            <div class="val bad" id="footRev">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ROI -->
+<section id="math">
+  <div class="wrap">
+    <div class="sec-eyebrow">Run your own numbers</div>
+    <h2>Your voicemail has a price tag.</h2>
+    <p class="lede">Most owners guess low. Put your real numbers in and see what walked out the door last year.</p>
+
+    <div class="roi">
+      <div>
+        <div class="field">
+          <label for="missed">Calls you miss in a month</label>
+          <input type="number" id="missed" value="25" min="0" max="999">
+        </div>
+        <div class="field">
+          <label for="jobval">Average job value ($)</label>
+          <input type="number" id="jobval" value="450" min="0" max="99999">
+        </div>
+        <div class="field">
+          <label for="close">If you'd called back, how many would you close? <span class="rate-val" id="closeVal">40%</span></label>
+          <input type="range" id="close" value="40" min="5" max="90" step="5">
+        </div>
+      </div>
+      <div class="roi-out">
+        <div class="lbl">Walking out the door every year</div>
+        <div class="roi-big" id="yearly">$54,000</div>
+        <div class="lbl" style="margin-top:6px" id="monthlyLine">$4,500 a month</div>
+        <div class="roi-note" id="roiNote"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODES -->
+<section id="what">
+  <div class="wrap">
+    <div class="sec-eyebrow">Two jobs, one Amy</div>
+    <h2>She picks up. She also reaches out.</h2>
+    <p class="lede">Same voice, same brain, two directions. Run one or run both.</p>
+
+    <div class="modes">
+      <div class="mode">
+        <div class="mode-kicker">Inbound — she answers</div>
+        <h3>The receptionist who never sleeps</h3>
+        <p>Forward your line to Amy after hours, when you're on the other call, or all day. Nobody hits voicemail again.</p>
+        <ul>
+          <li>Answers 24/7, weekends, holidays</li>
+          <li>Books straight into your calendar</li>
+          <li>Texts you the lead the second it lands</li>
+          <li>Knows your prices, your service area, your rules</li>
+          <li>Hands off to your cell when it's an emergency</li>
+        </ul>
+      </div>
+      <div class="mode">
+        <div class="mode-kicker">Outbound — she calls</div>
+        <h3>A phone room without the phone room</h3>
+        <p>Amy works your list, handles the objections, and books the ones who say yes. No headsets, no turnover, no payroll.</p>
+        <ul>
+          <li>Dials your list on your schedule</li>
+          <li>Works objections like a closer, not a robot</li>
+          <li>Books the appointment on the call</li>
+          <li>Hits a new marketplace lead in under 60 seconds</li>
+          <li>Warm-transfers the hot ones to your cell</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-eyebrow">Getting started</div>
+    <h2>Live in about a week. You do almost nothing.</h2>
+    <p class="lede">This is done-for-you. You don't build anything, and you don't learn any software.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">STEP 01</div>
+        <h3>We interview you once</h3>
+        <p>Twenty minutes. Your prices, your service area, what you will and won't take. We build Amy off that.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">STEP 02</div>
+        <h3>You hear her first</h3>
+        <p>We hand you a number and you try to break her. We tune her until she sounds like your best employee.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">STEP 03</div>
+        <h3>Flip your line over</h3>
+        <p>Forward your calls, or just the after-hours ones. Bookings hit your calendar. Leads hit your phone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-eyebrow">Pricing</div>
+    <h2>Cheaper than the calls you're already losing.</h2>
+    <p class="lede">One booked job usually covers the month. Everything after that is yours.</p>
+
+    <div class="price-switch" role="group" aria-label="Choose product">
+      <button id="pIn" class="on">Inbound receptionist</button>
+      <button id="pOut">Outbound dialer</button>
+    </div>
+    <div class="price-grid" id="priceGrid"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-eyebrow">Straight answers</div>
+    <h2>The things you're actually wondering.</h2>
+    <div class="faq">
+      <details open><summary>Will my customers know it's not a person?</summary>
+        <p>Some will, most won't, and honestly it stops mattering the moment she books them. She's polite, she's fast, and she never puts anyone on hold. Compare that to voicemail — which loses the customer 100% of the time.</p></details>
+      <details><summary>Do I have to change my phone number?</summary>
+        <p>No. You keep your number. You just forward it — all the time, after hours, or only when you don't pick up. Your choice, and you can change it whenever.</p></details>
+      <details><summary>What if she doesn't know the answer?</summary>
+        <p>Then she takes a message and texts you immediately, or transfers to your cell if you've told her it's urgent. She doesn't invent answers about your pricing.</p></details>
+      <details><summary>I've tried an answering service. Why is this different?</summary>
+        <p>An answering service takes a message. Amy takes the job — she quotes it, books it into your calendar, and confirms it. And she costs a fraction of what a service charges per call.</p></details>
+      <details><summary>Am I locked into a contract?</summary>
+        <p>Month to month after the build. If she isn't earning her keep, you turn her off.</p></details>
+      <details><summary>Who's behind this?</summary>
+        <p>ChimTech. We didn't build this in a lab — we built it inside our own chimney company, on our own phones, losing our own money on missed calls. It worked, so we started selling it.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div class="final">
+  <div class="wrap">
+    <h2>Go ahead. Call her.</h2>
+    <p>Sixty seconds on the phone will tell you more than anything else on this page.</p>
+    <a class="callbox" id="finalCall" href="#">
+      <span class="callbox-label">Amy is live right now</span>
+      <span class="callbox-num" id="finalNum">(000) 000-0000</span>
+    </a>
+  </div>
+</div>
+
+<div class="wrap">
+  <footer>
+    <span>ASK AMY — a product of ChimTech</span>
+    <span><a id="mailLink" href="#">hello@askamycall.com</a></span>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — CHANGE EVERYTHING HERE. NOTHING ELSE.
+   ============================================================ */
+const CONFIG = {
+
+  // ⚠️ THE DEMO LINE. This must be a Retell number running a DEMO Amy
+  // (one who knows she's talking to a BUSINESS OWNER, not a homeowner).
+  // Do NOT use SafeWay's Grasshopper line here.
+  phoneDisplay: "(000) 000-0000",
+  phoneDial:    "+10000000000",
+
+  email: "hello@askamycall.com",
+
+  // ⚠️ CONFIRM THESE. Outbound numbers are the ones we set before.
+  // Inbound Core/Pro are PLACEHOLDERS — set your real prices.
+  inbound: [
+    { name:"Starter", price:"$197", per:"/month", setup:"$500 build fee",
+      best:false,
+      feats:["After-hours + missed calls only","Up to 100 calls/mo","Books to your calendar","Text alert on every lead","Your service area + pricing"] },
+    { name:"Core", price:"$397", per:"/month", setup:"$750 build fee",
+      best:true,
+      feats:["24/7 — every call, every hour","Up to 400 calls/mo","Books to your calendar","Text + email on every lead","Emergency transfer to your cell","Monthly tune-up from real calls"] },
+    { name:"Pro", price:"$697", per:"/month", setup:"$1,000 build fee",
+      best:false,
+      feats:["Everything in Core","Unlimited calls","Multiple crews / dispatch rules","Spanish + English","Call recordings + monthly report","Priority tuning"] }
+  ],
+
+  outbound: [
+    { name:"Bronze", price:"$995", per:"/month", setup:"$2,000 build fee",
+      best:false,
+      feats:["Amy works your list","Objection handling","Books on the call","Standard reporting"] },
+    { name:"Silver", price:"$1,295", per:"/month", setup:"$2,200 build fee",
+      best:true,
+      feats:["Everything in Bronze","Higher call volume","Speed-to-lead: new leads dialed in <60 sec","Warm transfer to your cell","Callback list managed for you"] },
+    { name:"Gold", price:"$1,500", per:"/month", setup:"$2,500 build fee",
+      best:false,
+      feats:["Everything in Silver","Fully managed — we run it","Script rewrites off live transcripts","Multi-market campaigns","Direct line to us"] }
+  ]
+};
+/* ========================= END CONFIG ========================= */
+
+/* wire the phone number everywhere */
+const tel = "tel:" + CONFIG.phoneDial;
+["navCall","heroCall","finalCall"].forEach(id => document.getElementById(id).href = tel);
+document.getElementById("heroNum").textContent  = CONFIG.phoneDisplay;
+document.getElementById("finalNum").textContent = CONFIG.phoneDisplay;
+const ml = document.getElementById("mailLink");
+ml.href = "mailto:" + CONFIG.email; ml.textContent = CONFIG.email;
+
+/* ---------- SIGNATURE call strip ---------- */
+const SCENES = {
+  no: {
+    line: "INCOMING — (203) 555-0148 — NEW CALLER",
+    outcome: ["Outcome","MISSED","bad"],
+    rev: ["Revenue","$0","bad"],
+    evts: [
+      ["7:42 PM","Phone rings. You're finishing a flue liner.","RING","tag-ring"],
+      ["7:42 PM","Rings again. Hands full.","RING","tag-ring"],
+      ["7:43 PM","Goes to voicemail. She doesn't leave one.","MISSED","tag-miss"],
+      ["7:44 PM","She calls the next chimney guy on Google.","GONE","tag-miss"],
+      ["7:51 PM","He answers. He books her for Tuesday.","LOST","tag-miss"],
+      ["Tuesday","$450 job. His.","—","tag-miss"]
+    ]
+  },
+  yes: {
+    line: "INCOMING — (203) 555-0148 — AMY PICKING UP",
+    outcome: ["Outcome","BOOKED","good"],
+    rev: ["Revenue","$450","good"],
+    evts: [
+      ["7:42 PM","Phone rings once. Amy picks up.","ANSWERED","tag-ans"],
+      ["7:42 PM",'"Chimney sweep and inspection? I can get you in this week."',"TALKING","tag-ans"],
+      ["7:44 PM","Quotes the job. Confirms the address.","QUOTING","tag-ans"],
+      ["7:45 PM","Books her — Tuesday, 10 AM.","BOOKED","tag-book"],
+      ["7:45 PM","Calendar invite sent to the customer.","SENT","tag-book"],
+      ["7:45 PM","Your phone buzzes: new job on the board.","YOURS","tag-book"]
+    ]
+  }
+};
+
+const body = document.getElementById("stripBody");
+const lineEl = document.getElementById("stripLine");
+const fLbl = document.getElementById("footLbl");
+const fVal = document.getElementById("footVal");
+const fRev = document.getElementById("footRev");
+const btnNo = document.getElementById("btnNo");
+const btnYes = document.getElementById("btnYes");
+let timers = [];
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function play(key){
+  timers.forEach(clearTimeout); timers = [];
+  const s = SCENES[key];
+  lineEl.textContent = s.line;
+  body.innerHTML = "";
+  fVal.textContent = "—"; fRev.textContent = "—";
+  fVal.className = "val " + s.outcome[2];
+  fRev.className = "val " + s.outcome[2];
+  fLbl.textContent = s.outcome[0];
+
+  s.evts.forEach((e,i) => {
+    const row = document.createElement("div");
+    row.className = "evt";
+    row.innerHTML =
+      '<span class="evt-time">'+e[0]+'</span>' +
+      '<span class="evt-txt"></span>' +
+      '<span class="evt-tag '+e[3]+'">'+e[2]+'</span>';
+    row.querySelector(".evt-txt").textContent = e[1];
+    body.appendChild(row);
+    const delay = reduce ? 0 : 340 * (i+1);
+    timers.push(setTimeout(() => row.classList.add("show"), delay));
+  });
+
+  const end = reduce ? 0 : 340 * (s.evts.length + 1);
+  timers.push(setTimeout(() => {
+    fVal.textContent = s.outcome[1];
+    fRev.textContent = s.rev[1];
+  }, end));
+}
+
+btnNo.addEventListener("click", () => {
+  btnNo.classList.add("on"); btnYes.classList.remove("on"); play("no");
+});
+btnYes.addEventListener("click", () => {
+  btnYes.classList.add("on"); btnNo.classList.remove("on"); play("yes");
+});
+
+/* play on first scroll into view, then auto-flip to the good ending once */
+let fired = false;
+const io = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting && !fired) {
+      fired = true;
+      play("no");
+      if (!reduce) {
+        timers.push(setTimeout(() => btnYes.click(), 3600));
+      }
+    }
+  });
+}, { threshold: .35 });
+io.observe(body);
+
+/* ---------- ROI ---------- */
+const missed = document.getElementById("missed");
+const jobval = document.getElementById("jobval");
+const close  = document.getElementById("close");
+const money = n => "$" + Math.round(n).toLocaleString("en-US");
+
+function calc(){
+  const m = Math.max(0, +missed.value || 0);
+  const v = Math.max(0, +jobval.value || 0);
+  const r = (+close.value || 0) / 100;
+  document.getElementById("closeVal").textContent = Math.round(r*100) + "%";
+
+  const perMonth = m * v * r;
+  const perYear  = perMonth * 12;
+  document.getElementById("yearly").textContent = money(perYear);
+  document.getElementById("monthlyLine").textContent = money(perMonth) + " a month";
+
+  const rec = m > 150 ? CONFIG.inbound[2] : (m > 40 ? CONFIG.inbound[1] : CONFIG.inbound[0]);
+  const cost = +String(rec.price).replace(/[^0-9.]/g,"") || 0;
+  const note = document.getElementById("roiNote");
+
+  if (perMonth <= 0 || cost <= 0) {
+    note.innerHTML = "Put your numbers in above.";
+    return;
+  }
+  const mult = perMonth / cost;
+  note.innerHTML = mult >= 1.2
+    ? "At that volume, Amy <b>" + rec.name + "</b> runs <b>" + rec.price +
+      "/mo</b> — about <b>" + mult.toFixed(1) + "×</b> what she'd cost you. " +
+      "You'd need roughly <b>" + Math.ceil(cost / (jobval.value||1)) +
+      " booked job(s) a month</b> to break even."
+    : "At that volume Amy <b>" + rec.name + "</b> (" + rec.price +
+      "/mo) is close to break-even. Worth a call before you buy — we'll tell you straight if it's not a fit yet.";
+}
+[missed, jobval, close].forEach(el => el.addEventListener("input", calc));
+calc();
+
+/* ---------- PRICING ---------- */
+const grid = document.getElementById("priceGrid");
+const pIn = document.getElementById("pIn");
+const pOut = document.getElementById("pOut");
+
+function renderPlans(list){
+  grid.innerHTML = "";
+  list.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "plan" + (p.best ? " best" : "");
+    const feats = p.feats.map(f => "<li></li>").join("");
+    card.innerHTML =
+      '<div class="plan-name">Amy ' + p.name + '</div>' +
+      '<div class="plan-price">' + p.price + '</div>' +
+      '<div class="plan-per">' + p.per + '</div>' +
+      '<div class="plan-setup">' + p.setup + '</div>' +
+      '<ul>' + feats + '</ul>' +
+      '<a class="plan-btn" href="' + tel + '">Call Amy about it</a>';
+    const lis = card.querySelectorAll("li");
+    p.feats.forEach((f,i) => lis[i].textContent = f);
+    grid.appendChild(card);
+  });
+}
+pIn.addEventListener("click", () => {
+  pIn.classList.add("on"); pOut.classList.remove("on"); renderPlans(CONFIG.inbound);
+});
+pOut.addEventListener("click", () => {
+  pOut.classList.add("on"); pIn.classList.remove("on"); renderPlans(CONFIG.outbound);
+});
+renderPlans(CONFIG.inbound);
+</script>
+</body>
+</html>
