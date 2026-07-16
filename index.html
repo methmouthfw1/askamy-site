@@ -434,36 +434,34 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
   </div>
 </section>
 
-<!-- MODES -->
+<!-- WHAT SHE DOES -->
 <section id="what">
   <div class="wrap">
-    <div class="sec-eyebrow">Two jobs, one Amy</div>
-    <h2>She picks up. She also reaches out.</h2>
-    <p class="lede">Same voice, same brain, two directions. Run one or run both.</p>
+    <div class="sec-eyebrow">What Amy does</div>
+    <h2>The receptionist who never sleeps.</h2>
+    <p class="lede">Forward your line to Amy after hours, when you're on the other call, or all day. Every call gets answered. Nobody hits voicemail again.</p>
 
     <div class="modes">
       <div class="mode">
-        <div class="mode-kicker">Inbound — she answers</div>
-        <h3>The receptionist who never sleeps</h3>
-        <p>Forward your line to Amy after hours, when you're on the other call, or all day. Nobody hits voicemail again.</p>
+        <div class="mode-kicker">She answers every call</div>
+        <h3>On the first ring, around the clock</h3>
+        <p>Your customers call your number like always. Amy picks up — 24/7, weekends, holidays, the second you can't get to it.</p>
         <ul>
           <li>Answers 24/7, weekends, holidays</li>
-          <li>Books straight into your calendar</li>
-          <li>Texts you the lead the second it lands</li>
+          <li>Never puts a caller on hold or into voicemail</li>
           <li>Knows your prices, your service area, your rules</li>
-          <li>Hands off to your cell when it's an emergency</li>
+          <li>Sounds like your best front-desk employee</li>
         </ul>
       </div>
       <div class="mode">
-        <div class="mode-kicker">Outbound — she calls</div>
-        <h3>A phone room without the phone room</h3>
-        <p>Amy works your list, handles the objections, and books the ones who say yes. No headsets, no turnover, no payroll.</p>
+        <div class="mode-kicker">She books the job</div>
+        <h3>Quote, schedule, confirm — done</h3>
+        <p>She doesn't just take a message. She qualifies the caller, gets the address, books the appointment, and puts it on your calendar.</p>
         <ul>
-          <li>Dials your list on your schedule</li>
-          <li>Works objections like a closer, not a robot</li>
-          <li>Books the appointment on the call</li>
-          <li>Hits a new marketplace lead in under 60 seconds</li>
-          <li>Warm-transfers the hot ones to your cell</li>
+          <li>Books straight into your calendar</li>
+          <li>Captures the caller's address and job details</li>
+          <li>Texts you the lead the second it lands</li>
+          <li>Hands off to your cell when it's an emergency</li>
         </ul>
       </div>
     </div>
@@ -504,10 +502,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
     <h2>Cheaper than the calls you're already losing.</h2>
     <p class="lede">One booked job usually covers the month. Everything after that is yours.</p>
 
-    <div class="price-switch" role="group" aria-label="Choose product">
-      <button id="pIn" class="on">Inbound receptionist</button>
-      <button id="pOut">Outbound dialer</button>
-    </div>
     <div class="price-grid" id="priceGrid"></div>
   </div>
 </section>
@@ -527,7 +521,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
       <details><summary>I've tried an answering service. Why is this different?</summary>
         <p>An answering service takes a message. Amy takes the job — she quotes it, books it into your calendar, and confirms it. And she costs a fraction of what a service charges per call.</p></details>
       <details><summary>Am I locked into a contract?</summary>
-        <p>Month to month after the build. If she isn't earning her keep, you turn her off.</p></details>
+        <p>Month to month after the build. Cancel anytime by emailing us — it takes effect at the end of your billing period, and you won't be charged again. Full policy is in our <a href="/legal.html#refunds" style="color:var(--ember)">refund &amp; cancellation terms</a>.</p></details>
       <details><summary>Who's behind this?</summary>
         <p>ChimTech. We didn't build this in a lab — we built it inside our own chimney company, on our own phones, losing our own money on missed calls. It worked, so we started selling it.</p></details>
     </div>
@@ -548,8 +542,13 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
 
 <div class="wrap">
   <footer>
-    <span>ASK AMY — a product of ChimTech</span>
-    <span><a id="mailLink" href="#">hello@askamycall.com</a></span>
+    <span>ASK AMY — a product of ChimTech &nbsp;·&nbsp; Askamy LLC</span>
+    <span>
+      <a href="/legal.html#terms">Terms</a> &nbsp;·&nbsp;
+      <a href="/legal.html#privacy">Privacy</a> &nbsp;·&nbsp;
+      <a href="/legal.html#refunds">Refunds</a> &nbsp;·&nbsp;
+      <a id="mailLink" href="#">hello@askamycall.com</a>
+    </span>
   </footer>
 </div>
 
@@ -567,8 +566,7 @@ const CONFIG = {
 
   email: "hello@askamycall.com",
 
-  // ⚠️ CONFIRM THESE. Outbound numbers are the ones we set before.
-  // Inbound Core/Pro are PLACEHOLDERS — set your real prices.
+  // ⚠️ Inbound Core/Pro are PLACEHOLDERS — set your real prices.
   inbound: [
     { name:"Starter", price:"$197", per:"/month", setup:"$500 build fee",
       best:false,
@@ -579,18 +577,6 @@ const CONFIG = {
     { name:"Pro", price:"$697", per:"/month", setup:"$1,000 build fee",
       best:false,
       feats:["Everything in Core","Unlimited calls","Multiple crews / dispatch rules","Spanish + English","Call recordings + monthly report","Priority tuning"] }
-  ],
-
-  outbound: [
-    { name:"Bronze", price:"$995", per:"/month", setup:"$2,000 build fee",
-      best:false,
-      feats:["Amy works your list","Objection handling","Books on the call","Standard reporting"] },
-    { name:"Silver", price:"$1,295", per:"/month", setup:"$2,200 build fee",
-      best:true,
-      feats:["Everything in Bronze","Higher call volume","Speed-to-lead: new leads dialed in <60 sec","Warm transfer to your cell","Callback list managed for you"] },
-    { name:"Gold", price:"$1,500", per:"/month", setup:"$2,500 build fee",
-      best:false,
-      feats:["Everything in Silver","Fully managed — we run it","Script rewrites off live transcripts","Multi-market campaigns","Direct line to us"] }
   ]
 };
 /* ========================= END CONFIG ========================= */
@@ -734,8 +720,6 @@ calc();
 
 /* ---------- PRICING ---------- */
 const grid = document.getElementById("priceGrid");
-const pIn = document.getElementById("pIn");
-const pOut = document.getElementById("pOut");
 
 function renderPlans(list){
   grid.innerHTML = "";
@@ -755,12 +739,6 @@ function renderPlans(list){
     grid.appendChild(card);
   });
 }
-pIn.addEventListener("click", () => {
-  pIn.classList.add("on"); pOut.classList.remove("on"); renderPlans(CONFIG.inbound);
-});
-pOut.addEventListener("click", () => {
-  pOut.classList.add("on"); pIn.classList.remove("on"); renderPlans(CONFIG.outbound);
-});
 renderPlans(CONFIG.inbound);
 </script>
 </body>
