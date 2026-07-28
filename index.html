@@ -294,6 +294,13 @@ h2{
   border:1px solid var(--ash);color:var(--bone);transition:all .15s;
 }
 .plan-btn:hover{border-color:var(--ember);color:var(--ember)}
+.plan-btn{width:100%;cursor:pointer;font-family:inherit}
+.plan-btn[disabled]{opacity:.6;cursor:default}
+.plan-alt{
+  display:block;text-align:center;margin-top:10px;
+  color:var(--smoke);font-size:14px;text-decoration:none;
+}
+.plan-alt:hover{color:var(--ember)}
 .plan.best .plan-btn{background:var(--ember);color:#140A05;border-color:var(--ember)}
 .plan.best .plan-btn:hover{background:var(--flame);border-color:var(--flame)}
 .price-switch{display:flex;gap:0;border:1px solid var(--ash);border-radius:5px;overflow:hidden;margin-bottom:32px;width:fit-content;max-width:100%}
@@ -569,13 +576,13 @@ const CONFIG = {
   // ⚠️ Inbound Core/Pro are PLACEHOLDERS — set your real prices.
   inbound: [
     { name:"Starter", price:"$197", per:"/month", setup:"$500 build fee",
-      best:false,
+      key:"starter", best:false,
       feats:["After-hours + missed calls only","Up to 100 calls/mo","Books to your calendar","Text alert on every lead","Your service area + pricing"] },
     { name:"Core", price:"$397", per:"/month", setup:"$750 build fee",
-      best:true,
+      key:"core", best:true,
       feats:["24/7 — every call, every hour","Up to 400 calls/mo","Books to your calendar","Text + email on every lead","Emergency transfer to your cell","Monthly tune-up from real calls"] },
     { name:"Pro", price:"$697", per:"/month", setup:"$1,000 build fee",
-      best:false,
+      key:"pro", best:false,
       feats:["Everything in Core","Unlimited calls","Multiple crews / dispatch rules","Spanish + English","Call recordings + monthly report","Priority tuning"] }
   ]
 };
@@ -721,6 +728,26 @@ calc();
 /* ---------- PRICING ---------- */
 const grid = document.getElementById("priceGrid");
 
+async function startCheckout(plan, btn){
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "One sec…";
+  try {
+    const r = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plan })
+    });
+    const data = await r.json();
+    if (data && data.url) { window.location = data.url; return; }
+    throw new Error(data && data.error ? data.error : "no url");
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = original;
+    alert("Checkout isn't available right now — call us at (888) 287-7973 and we'll get you set up.");
+  }
+}
+
 function renderPlans(list){
   grid.innerHTML = "";
   list.forEach(p => {
@@ -733,9 +760,12 @@ function renderPlans(list){
       '<div class="plan-per">' + p.per + '</div>' +
       '<div class="plan-setup">' + p.setup + '</div>' +
       '<ul>' + feats + '</ul>' +
-      '<a class="plan-btn" href="' + tel + '">Call Amy about it</a>';
+      '<button class="plan-btn" type="button" data-plan="' + p.key + '">Get started</button>' +
+      '<a class="plan-alt" href="' + tel + '">or call Amy about it</a>';
     const lis = card.querySelectorAll("li");
     p.feats.forEach((f,i) => lis[i].textContent = f);
+    const buy = card.querySelector(".plan-btn");
+    buy.addEventListener("click", () => startCheckout(p.key, buy));
     grid.appendChild(card);
   });
 }
