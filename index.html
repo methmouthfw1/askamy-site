@@ -345,9 +345,67 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .evt{opacity:1;transform:none}
 }
+
+/* ---------- LEFT SIDEBAR ---------- */
+.side{
+  position:fixed;top:0;left:0;bottom:0;width:220px;z-index:120;
+  background:var(--char);border-right:1px solid var(--ash);
+  display:flex;flex-direction:column;padding:28px 20px;
+  transform:translateX(-100%);transition:transform .25s ease;
+}
+.side.open{transform:translateX(0)}
+.side-logo{font-family:var(--disp);font-weight:900;font-size:19px;letter-spacing:-.02em;margin-bottom:36px}
+.side-logo em{color:var(--ember);font-style:normal}
+.side a.side-link{
+  display:block;font-family:var(--mono);font-size:13px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--smoke);text-decoration:none;
+  padding:14px 12px;border-left:2px solid transparent;border-radius:0 4px 4px 0;
+  transition:color .15s,background .15s,border-color .15s;
+}
+.side a.side-link:hover,.side a.side-link.active{color:var(--bone);background:var(--ash);border-left-color:var(--ember)}
+.side .nav-cta{margin-top:auto;text-align:center}
+.side-scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:110;opacity:0;pointer-events:none;transition:opacity .25s}
+.side-scrim.open{opacity:1;pointer-events:auto}
+.menu-btn{
+  position:fixed;left:16px;bottom:16px;z-index:130;
+  display:flex;align-items:center;gap:10px;
+  background:var(--char);border:1px solid var(--ash);border-radius:4px;color:var(--bone);
+  font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  padding:10px 14px;cursor:pointer;
+}
+.menu-btn span{display:block;width:16px;height:2px;background:currentColor;box-shadow:0 -5px 0 currentColor,0 5px 0 currentColor}
+@media(min-width:960px){
+  .side{transform:none;top:64px;z-index:90}
+  .side-logo,.side-scrim,.menu-btn{display:none}
+  body{padding-left:220px}
+  nav{margin-left:-220px}
+}
+section,.final{scroll-margin-top:72px}
+
+/* ---------- ABOUT / CONTACT ---------- */
+.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.about-card{background:var(--char);border:1px solid var(--ash);border-radius:8px;padding:24px}
+.about-card .big{font-family:var(--disp);font-weight:900;font-size:40px;color:var(--ember);line-height:1;margin-bottom:8px}
+.about-card p{color:var(--smoke);font-size:15px}
+.contact-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:22px}
+.contact-link{
+  font-family:var(--mono);font-size:14px;color:var(--bone);text-decoration:none;
+  border:1px solid var(--ash);border-radius:4px;padding:12px 18px;
+}
+.contact-link:hover{border-color:var(--ember);color:var(--ember)}
 </style>
 </head>
 <body>
+
+<aside class="side" id="side">
+  <div class="side-logo">ASK <em>AMY</em></div>
+  <a class="side-link" href="#about">About</a>
+  <a class="side-link" href="#pricing">Pricing</a>
+  <a class="side-link" href="#contact">Contact</a>
+  <a class="nav-cta" id="sideCall" href="#">Call Amy</a>
+</aside>
+<div class="side-scrim" id="scrim"></div>
+<button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span>Menu</button>
 
 <nav>
   <div class="wrap nav-in">
@@ -495,6 +553,20 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
   </div>
 </section>
 
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-eyebrow">About</div>
+    <h2>Built by a guy who lost the calls himself.</h2>
+    <p class="lede">Ask Amy comes out of ChimTech. We spent years running chimney and home service companies across Connecticut, Massachusetts, New York and Rhode Island &mdash; on roofs, in basements, watching the phone ring with nobody to grab it. So we built the receptionist we needed and ran it on our own lines first.</p>
+    <div class="about-grid">
+      <div class="about-card"><div class="big">18+</div><p>Years in phone sales and home services. We know what your phone does in November.</p></div>
+      <div class="about-card"><div class="big">24/7</div><p>Amy answers every call, books the job, and texts you the lead &mdash; nights, weekends, holidays.</p></div>
+      <div class="about-card"><div class="big">1 wk</div><p>From a 20-minute interview to Amy live on your line. Done-for-you, no software to learn.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- PRICING -->
 <section id="pricing">
   <div class="wrap">
@@ -528,8 +600,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
   </div>
 </section>
 
-<!-- FINAL -->
-<div class="final">
+<!-- CONTACT -->
+<div class="final" id="contact">
   <div class="wrap">
     <h2>Go ahead. Call her.</h2>
     <p>Sixty seconds on the phone will tell you more than anything else on this page.</p>
@@ -537,6 +609,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
       <span class="callbox-label">Amy is live right now</span>
       <span class="callbox-num" id="finalNum">(888) 287-7973</span>
     </a>
+    <div class="contact-row">
+      <a class="contact-link" id="contactMail" href="#">✉ hello@askamycall.com</a>
+    </div>
   </div>
 </div>
 
@@ -583,11 +658,27 @@ const CONFIG = {
 
 /* wire the phone number everywhere */
 const tel = "tel:" + CONFIG.phoneDial;
-["navCall","heroCall","finalCall"].forEach(id => document.getElementById(id).href = tel);
+["navCall","heroCall","finalCall","sideCall"].forEach(id => document.getElementById(id).href = tel);
 document.getElementById("heroNum").textContent  = CONFIG.phoneDisplay;
 document.getElementById("finalNum").textContent = CONFIG.phoneDisplay;
 const ml = document.getElementById("mailLink");
 ml.href = "mailto:" + CONFIG.email; ml.textContent = CONFIG.email;
+const cm = document.getElementById("contactMail");
+cm.href = "mailto:" + CONFIG.email; cm.textContent = "✉ " + CONFIG.email;
+
+/* ---------- left sidebar ---------- */
+const side = document.getElementById("side"), scrim = document.getElementById("scrim");
+const setSide = o => { side.classList.toggle("open", o); scrim.classList.toggle("open", o); };
+document.getElementById("menuBtn").onclick = () => setSide(!side.classList.contains("open"));
+scrim.onclick = () => setSide(false);
+side.querySelectorAll(".side-link").forEach(a => a.addEventListener("click", () => setSide(false)));
+const secs = ["about","pricing","contact"].map(id => document.getElementById(id));
+const links = side.querySelectorAll(".side-link");
+addEventListener("scroll", () => {
+  let cur = -1;
+  secs.forEach((el,i) => { if (el.getBoundingClientRect().top < 160) cur = i; });
+  links.forEach((a,i) => a.classList.toggle("active", i === cur));
+}, {passive:true});
 
 /* ---------- SIGNATURE call strip ---------- */
 const SCENES = {
